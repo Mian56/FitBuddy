@@ -1,1 +1,37 @@
 folder contains logo
+
+
+
+Goals...
+__________________________
+🏋️ Workout Log
+
+Add workouts with sets/reps or time-based exercises
+
+Track stats over time
+
+Include checkboxes or completed markers
+
+🍽️ Budgeting Food / Macros
+
+Input food items, calories, macros
+
+Track daily limits and progress toward goals
+
+Either manually added or from a static list to start
+
+📓 Fitness Journal / Blog
+
+Write short notes or logs
+
+Tag entries (e.g. "Motivation", "Weekly Summary")
+
+Simple markdown or textarea support
+
+🤖 Fitness Buddy / Motivation
+
+Add reminders, motivational messages, or random health facts
+
+Could include daily tips or streak counters
+
+___________________________________
