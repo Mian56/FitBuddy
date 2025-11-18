@@ -1,8 +1,10 @@
 // src/pages/WorkoutLogger.js
 import { useState } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import PageLayout from "../components/PageLayout";
+import Card from "../components/Card";
 
-export default function WorkoutLogger() {
+const WorkoutLogger = () => {
     const [workouts, setWorkouts] = useLocalStorage("workouts", []);
     const [type, setType] = useState("");
     const [duration, setDuration] = useState("");
@@ -21,6 +23,7 @@ export default function WorkoutLogger() {
         };
 
         setWorkouts([...workouts, newWorkout]);
+
         setType("");
         setDuration("");
         setCalories("");
@@ -28,57 +31,107 @@ export default function WorkoutLogger() {
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Workout Logger</h2>
-            <p>Log your daily workouts to stay consistent.</p>
+        <PageLayout title="Workout Logger">
+            <Card>
 
-            {/* Form */}
-            <div style={{ marginBottom: "20px" }}>
-                <input
-                    type="text"
-                    placeholder="Workout Type (e.g. Running)"
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
-                    style={{ marginRight: "10px", padding: "5px" }}
-                />
-                <input
-                    type="text"
-                    placeholder="Duration (e.g. 30 mins)"
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
-                    style={{ marginRight: "10px", padding: "5px" }}
-                />
-                <input
-                    type="text"
-                    placeholder="Calories burned (optional)"
-                    value={calories}
-                    onChange={(e) => setCalories(e.target.value)}
-                    style={{ marginRight: "10px", padding: "5px" }}
-                />
-                <input
-                    type="text"
-                    placeholder="Notes (optional)"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    style={{ marginRight: "10px", padding: "5px" }}
-                />
-                <button onClick={addWorkout} style={{ padding: "5px 10px" }}>
-                    Add Workout
-                </button>
-            </div>
+                {/* Form */}
+                <div style={formContainer}>
+                    <input
+                        type="text"
+                        placeholder="Workout Type (e.g., Running)"
+                        value={type}
+                        onChange={(e) => setType(e.target.value)}
+                        style={inputStyle}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Duration (e.g., 30 mins)"
+                        value={duration}
+                        onChange={(e) => setDuration(e.target.value)}
+                        style={inputStyle}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Calories burned (optional)"
+                        value={calories}
+                        onChange={(e) => setCalories(e.target.value)}
+                        style={inputStyle}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Notes (optional)"
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        style={inputStyle}
+                    />
 
-            {/* Display list */}
-            <ul>
-                {workouts.map((workout, index) => (
-                    <li key={index} style={{ marginBottom: "10px" }}>
-                        <strong>{workout.type}</strong> — {workout.duration}
-                        <br />
-                        <em>Calories:</em> {workout.calories} <br />
-                        {workout.notes && <em>Notes:</em>} {workout.notes} <br />
-                        <small style={{ color: "#666" }}>{workout.date}</small>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-}
+                    <button onClick={addWorkout} style={addBtnStyle}>
+                        Add Workout
+                    </button>
+                </div>
+
+                {/* Workout List */}
+                <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
+                    {workouts.length === 0 && (
+                        <p style={{ opacity: 0.6 }}>No workouts logged yet.</p>
+                    )}
+
+                    {workouts.map((workout, index) => (
+                        <li
+                            key={index}
+                            style={{
+                                padding: "12px 0",
+                                borderBottom: "1px solid #eee"
+                            }}
+                        >
+                            <strong style={{ fontSize: "17px" }}>
+                                {workout.type}
+                            </strong>
+                            <div style={{ marginTop: "6px" }}>
+                                <span><b>⏱ Duration:</b> {workout.duration}</span><br/>
+                                <span><b>🔥 Calories:</b> {workout.calories}</span><br/>
+                                {workout.notes && (
+                                    <span><b>📝 Notes:</b> {workout.notes}</span>
+                                )}
+                            </div>
+
+
+                            <small style={{ color: "#888", display: "block", marginTop: "6px" }}>
+                    Logged on {workout.date}
+                </small>
+            </li>
+            ))}
+        </ul>
+
+</Card>
+</PageLayout>
+);
+};
+
+export default WorkoutLogger;
+
+
+// ------------------ Styles ------------------ //
+
+const formContainer = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+};
+
+const inputStyle = {
+    padding: "12px",
+    fontSize: "15px",
+    borderRadius: "6px",
+    border: "1px solid #ccc",
+};
+
+const addBtnStyle = {
+    padding: "12px",
+    background: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "16px",
+};

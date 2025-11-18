@@ -1,12 +1,14 @@
 // src/pages/WaterTracker.js
 import { useState, useEffect } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
+import PageLayout from "../components/PageLayout";
+import Card from "../components/Card";
 
 export default function WaterTracker() {
     const [cupsDrank, setCupsDrank] = useLocalStorage("cupsDrank", 0);
     const dailyGoal = 8;
 
-    // Reset daily water count if the date changed
+    // Reset water count if date changed
     useEffect(() => {
         const lastDate = localStorage.getItem("lastWaterDate");
         const today = new Date().toLocaleDateString();
@@ -28,30 +30,55 @@ export default function WaterTracker() {
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Water Tracker</h2>
-            <p>You’ve had <strong>{cupsDrank}</strong> out of {dailyGoal} cups today.</p>
+        <PageLayout title="Water Tracker">
+            <Card>
+                <p style={{ fontSize: "18px", marginBottom: "15px" }}>
+                    You’ve had <strong>{cupsDrank}</strong> out of {dailyGoal} cups today.
+                </p>
 
-            <button onClick={addCup} style={{ marginRight: "10px" }}>
-                Add Cup
-            </button>
-            <button onClick={resetCups}>Reset</button>
+                <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+                    <button
+                        onClick={addCup}
+                        style={buttonStyle}
+                    >
+                        Add Cup
+                    </button>
 
-            <div style={{ marginTop: "20px" }}>
-                {Array.from({ length: dailyGoal }).map((_, index) => (
-                    <span
-                        key={index}
-                        style={{
-                            display: "inline-block",
-                            width: "25px",
-                            height: "25px",
-                            margin: "5px",
-                            borderRadius: "50%",
-                            backgroundColor: index < cupsDrank ? "#4caf50" : "#ccc",
-                        }}
-                    />
-                ))}
-            </div>
-        </div>
+                    <button
+                        onClick={resetCups}
+                        style={{ ...buttonStyle, background: "#ccc", color: "#333" }}
+                    >
+                        Reset
+                    </button>
+                </div>
+
+                {/* Progress Dots */}
+                <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap" }}>
+                    {Array.from({ length: dailyGoal }).map((_, index) => (
+                        <span
+                            key={index}
+                            style={{
+                                width: "30px",
+                                height: "30px",
+                                borderRadius: "50%",
+                                margin: "6px",
+                                backgroundColor: index < cupsDrank ? "#4CAF50" : "#e0e0e0",
+                                transition: "0.25s",
+                            }}
+                        />
+                    ))}
+                </div>
+            </Card>
+        </PageLayout>
     );
 }
+
+const buttonStyle = {
+    padding: "10px 16px",
+    background: "#4CAF50",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontSize: "15px"
+};

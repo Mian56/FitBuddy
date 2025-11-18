@@ -9,27 +9,50 @@ export default function Dashboard() {
     const incrementStreak = (setter) => setter((prev) => prev + 1);
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Dashboard</h2>
-            <p>Track your fitness streak and progress:</p>
+        <div style={{
+            padding: "40px",
+            maxWidth: "900px",
+            margin: "0 auto",
+        }}>
+            <h2 style={{
+                fontSize: "32px",
+                marginBottom: "10px",
+                color: "#1A3D6D"
+            }}>
+                Dashboard
+            </h2>
 
-            <StreakCard
-                title="Workout Streak"
-                count={workoutStreak}
-                onIncrement={() => incrementStreak(setWorkoutStreak)}
-            />
+            <p style={{
+                marginBottom: "30px",
+                color: "#444",
+                fontSize: "16px"
+            }}>
+                Track your daily habits and streaks:
+            </p>
 
-            <StreakCard
-                title="Hydration Streak"
-                count={hydrationStreak}
-                onIncrement={() => incrementStreak(setHydrationStreak)}
-            />
+            <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                gap: "20px",
+            }}>
+                <StreakCard
+                    title="Workout Streak"
+                    count={workoutStreak}
+                    onIncrement={() => incrementStreak(setWorkoutStreak)}
+                />
 
-            <StreakCard
-                title="Calories Tracked"
-                count={calorieStreak}
-                onIncrement={() => incrementStreak(setCalorieStreak)}
-            />
+                <StreakCard
+                    title="Hydration Streak"
+                    count={hydrationStreak}
+                    onIncrement={() => incrementStreak(setHydrationStreak)}
+                />
+
+                <StreakCard
+                    title="Calories Tracked"
+                    count={calorieStreak}
+                    onIncrement={() => incrementStreak(setCalorieStreak)}
+                />
+            </div>
         </div>
     );
 }

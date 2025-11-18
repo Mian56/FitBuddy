@@ -1,0 +1,35 @@
+/* NAVIGATION BAR */
+.navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 12px 20px;
+    display: flex;
+    gap: 1.5rem;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* NAV LINKS */
+.nav-item {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+
+/* HOVER EFFECT */
+.nav-item:hover {
+    background: #f0f0f0;
+}
+
+/* ACTIVE PAGE HIGHLIGHT */
+.nav-item.active {
+    color: #1976d2;
+    background: #e3f2fd;
+    font-weight: 600;
+}

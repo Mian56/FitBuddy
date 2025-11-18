@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route, Link, NavLink} from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Log from "./pages/Log";
 import Progress from "./pages/Progress";
@@ -6,6 +6,7 @@ import Goals from "./pages/Goals";
 import WaterTracker from "./pages/WaterTracker";
 import WorkoutLogger from "./pages/WorkoutLogger";
 import FoodLogger from "./pages/FoodLogger";
+import "./App.css"; // Add this file for navbar styles
 
 
 
@@ -13,14 +14,14 @@ import FoodLogger from "./pages/FoodLogger";
 function App() {
     return (
         <Router>
-            <nav style={{ padding: "10px", display: "flex", gap: "1rem", background: "#F5F8FA" }}>
-                <Link to="/">Dashboard</Link>
-                <Link to="/log">Log</Link>
-                <Link to="/progress">Progress</Link>
-                <Link to="/goals">Goals</Link>
-                <Link to="/water-tracker">Water Tracker</Link>
-                <Link to="/workout-logger">Workout</Link>
-                <Link to="/food-logger">Food</Link>
+            <nav className="navbar">
+                <NavLink to="/" className="nav-item">Dashboard</NavLink>
+                <NavLink to="/log" className="nav-item">Log</NavLink>
+                <NavLink to="/progress" className="nav-item">Progress</NavLink>
+                <NavLink to="/goals" className="nav-item">Goals</NavLink>
+                <NavLink to="/water-tracker" className="nav-item">Water</NavLink>
+                <NavLink to="/workout-logger" className="nav-item">Workouts</NavLink>
+                <NavLink to="/food-logger" className="nav-item">Food</NavLink>
 
             </nav>
 
