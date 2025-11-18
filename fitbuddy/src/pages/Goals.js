@@ -1,36 +1,26 @@
-// src/pages/Goals.js
 import { useState, useEffect } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-import GoalItem from "../components/GoalItem";
 
+const Goals = () => {
+    const [goals, setGoals] = useState([]);
+    const [newGoal, setNewGoal] = useState("");
 
-// Check if goals need to reset
-useEffect(() => {
-    const lastDate = localStorage.getItem("lastGoalDate");
-    const today = new Date().toLocaleDateString();
+    // Initialize goals from localStorage on component mount
+    useEffect(() => {
+        const storedGoals = localStorage.getItem("goals");
+        if (storedGoals) {
+            setGoals(JSON.parse(storedGoals));
+        }
+    }, []);
 
-    if (lastDate !== today) {
-        // Clear completion state
-        const resetGoals = goals.map(goal => ({ ...goal, completed: false }));
-        setGoals(resetGoals);
-        localStorage.setItem("lastGoalDate", today);
-    }
-}, [goals, setGoals]);
-
-
-export default function Goals() {
-    const [goals, setGoals] = useLocalStorage("goals", [
-        { name: "Drink 8 cups of water", completed: false },
-        { name: "Burn 400 calories", completed: false },
-        { name: "Walk 10,000 steps", completed: false }
-    ]);
-
-    import { useState, useEffect } from "react";
+    // Save goals to localStorage whenever they change
+    useEffect(() => {
+        localStorage.setItem("goals", JSON.stringify(goals));
+    }, [goals]);
 
     const addGoal = () => {
-        if (!newGoal.trim()) return;
-        setGoals([...goals, { name: newGoal, completed: false }]);
-        setNewGoal(""); // clear input field
+        if (newGoal.trim() === "") return;
+        setGoals([...goals, { text: newGoal, completed: false }]);
+        setNewGoal("");
     };
 
     const toggleGoal = (index) => {
@@ -39,31 +29,40 @@ export default function Goals() {
         setGoals(updatedGoals);
     };
 
+    const deleteGoal = (index) => {
+        setGoals(goals.filter((_, i) => i !== index));
+    };
+
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Your Daily Goals</h2>
-
-            {/* Add Goal Form */}
-            <input
-                type="text"
-                placeholder="Add a new goal..."
-                value={newGoal}
-                onChange={(e) => setNewGoal(e.target.value)}
-                style={{ marginRight: "10px", padding: "5px" }}
-            />
-            <button onClick={addGoal} style={{ padding: "5px 10px" }}>Add</button>
-
-            {/* Goals List */}
-            <ul style={{ marginTop: "20px" }}>
+        <section>
+            <h2>Goals Tracker</h2>
+            <div>
+                <input
+                    type="text"
+                    value={newGoal}
+                    onChange={(e) => setNewGoal(e.target.value)}
+                    placeholder="Enter your goal"
+                />
+                <button onClick={addGoal}>Add Goal</button>
+            </div>
+            <ul>
                 {goals.map((goal, index) => (
-                    <GoalItem
-                        key={index}
-                        goal={goal}
-                        index={index}
-                        toggleGoal={toggleGoal}
-                    />
+                    <li key={index}>
+            <span
+                onClick={() => toggleGoal(index)}
+                style={{
+                    textDecoration: goal.completed ? "line-through" : "none",
+                    cursor: "pointer",
+                }}
+            >
+              {goal.text}
+            </span>
+                        <button onClick={() => deleteGoal(index)}>❌</button>
+                    </li>
                 ))}
             </ul>
-        </div>
+        </section>
     );
-}
+};
+
+export default Goals;
