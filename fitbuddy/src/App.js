@@ -5,6 +5,7 @@ import Progress from "./pages/Progress";
 import Goals from "./pages/Goals";
 import WaterTracker from "./pages/WaterTracker";
 import WorkoutLogger from "./pages/WorkoutLogger";
+import FoodLogger from "./pages/FoodLogger";
 
 
 
@@ -19,6 +20,7 @@ function App() {
                 <Link to="/goals">Goals</Link>
                 <Link to="/water-tracker">Water Tracker</Link>
                 <Link to="/workout-logger">Workout</Link>
+                <Link to="/food-logger">Food</Link>
 
             </nav>
 
@@ -29,7 +31,7 @@ function App() {
                 <Route path="/goals" element={<Goals />} />
                 <Route path="/water-tracker" element={<WaterTracker />} />
                 <Route path="/workout-logger" element={<WorkoutLogger />} />
-
+                <Route path="/food-logger" element={<FoodLogger />} />
 
             </Routes>
         </Router>
