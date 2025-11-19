@@ -235,21 +235,28 @@ export default function WaterTracker() {
                     <button onClick={resetCups} style={{ ...buttonStyle, background: "#ccc", color: "#333" }}>Reset</button>
                 </div>
 
-                <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap" }}>
-                    {Array.from({ length: dailyGoal }).map((_, index) => (
-                        <span
-                            key={index}
-                            style={{
-                                width: "30px",
-                                height: "30px",
-                                borderRadius: "50%",
-                                margin: "6px",
-                                backgroundColor: index < cupsDrank ? "#4CAF50" : "#e0e0e0",
-                                transition: "0.25s",
-                            }}
-                        />
-                    ))}
+                {/* Water Drops */}
+                <div style={{ marginTop: "10px", display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    {Array.from({ length: dailyGoal }).map((_, index) => {
+                        const isFilled = index < cupsDrank;
+
+                        return (
+                            <span
+                                key={index}
+                                style={{
+                                    fontSize: "30px",
+                                    transition: "transform 0.25s ease, opacity 0.25s ease",
+                                    transform: isFilled ? "scale(1.25)" : "scale(1)",
+                                    opacity: isFilled ? 1 : 0.5,
+                                    filter: isFilled ? "drop-shadow(0px 0px 4px #42A5F5)" : "none",
+                                }}
+                            >
+                {isFilled ? "💧" : "🫗"}
+            </span>
+                        );
+                    })}
                 </div>
+
 
 
                 <WeeklyHistory history={waterHistory} dailyGoal={dailyGoal} />
